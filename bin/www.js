@@ -7,10 +7,17 @@
 const app = require('../app');
 const debug = require('debug')('chat:server');
 const http = require('http');
+
+
+
 const { Socket } = require('dgram');
 const { Console } = require('console');
+const { config } = require('dotenv');
 
 require('dotenv').config();
+
+// config DB
+require('../config/db');
 
 /**
  * Get port from environment and store in Express.
@@ -41,7 +48,11 @@ io.on('connection', (socket) => {
   // io.engine.clientsCount : cuenta el numero de clientes conectados
   io.emit('usuario_chat', io.engine.clientsCount);
 
-  socket.on('mensaje_chat', (data) => {
+  socket.on('mensaje_chat', async (data) => {
+    await Mensaje.create({
+      nombre: data.nombre,
+      mensaje: data.mensaje
+    });
     io.emit('mensaje_chat', data);
   });
 

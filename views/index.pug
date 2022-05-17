@@ -10,7 +10,8 @@ block content
 
     main 
       ul#mensajes        
-          
+         each mensaje in mensajes
+         li #{mensaje.nombre} : #{mensajes.texto} 
     footer 
       div
         label Nombre
