@@ -4,9 +4,8 @@ block content
   .chat 
     header 
      h1 APP CHAT 
-     hr
      h4 
-        | Usuarios conectados:
+        | Usuarios conectados : 
         span#numUsuarios
 
     main 
@@ -49,5 +48,5 @@ block content
 
     socket.on('usuario_chat', (data) => {
       
-      numUsuarios.innerText= data;
+      numUsuarios.innerText=  data;
     });
