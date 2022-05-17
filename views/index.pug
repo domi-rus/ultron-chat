@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  .chat 
+    header 
+     h1 APP CHAT 
+     hr
+     h4 
+        | Usuarios conectados:
+        span#numUsuarios
+
+    main 
+      ul#mensajes        
+          
+    footer 
+      div
+        label Nombre
+        input#inputNombre(type="text")
+      div
+        label Mensaje
+        input#inputMensaje(type="text")
+      div
+        button#btnEnviar Enviar
+
+
+  script.
+    const socket = io(); // canal de comunicacion entre cliente-servidor
+
+    const inputNombre = document.getElementById('inputNombre');
+    const inputMensaje = document.getElementById('inputMensaje');
+    const btnEnviar = document.getElementById('btnEnviar');
+    const mensaje = document.getElementById('mensajes');
+    const numUsuarios = document.getElementById('numUsuarios');
+
+
+    btnEnviar.addEventListener('click', ()=>{
+      console.log(inputNombre.value, inputMensaje.value)
+      socket.emit('mensaje_chat', {
+        nombre: inputNombre.value,
+        mensaje: inputMensaje.value
+      });
+    });
+
+    socket.on('mensaje_chat', (data) => {
+      const li = document.createElement('li')
+      li.innerText = `${data.nombre}: ${data.mensaje}`;
+      mensajes.appendChild(li);
+    });
+
+    socket.on('usuario_chat', (data) => {
+      
+      numUsuarios.innerText= data;
+    });
