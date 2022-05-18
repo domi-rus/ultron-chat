@@ -8,11 +8,8 @@ const app = require('../app');
 const debug = require('debug')('chat:server');
 const http = require('http');
 
+const Mensaje = require('../models/mensaje.model')
 
-
-const { Socket } = require('dgram');
-const { Console } = require('console');
-const { config } = require('dotenv');
 
 require('dotenv').config();
 
@@ -51,7 +48,7 @@ io.on('connection', (socket) => {
   socket.on('mensaje_chat', async (data) => {
     await Mensaje.create({
       nombre: data.nombre,
-      mensaje: data.mensaje
+      texto: data.mensaje
     });
     io.emit('mensaje_chat', data);
   });
