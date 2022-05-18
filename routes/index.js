@@ -23,7 +23,7 @@ router.get('/chat', async function (req, res) {
 });
 
 router.post('/login', (req, res) => {
-  res.session.nombre = req.body.nombre;
+  req.session.nombre = req.body.nombre;
   res.redirect('/chat');
 });
 
